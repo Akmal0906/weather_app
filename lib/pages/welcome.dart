@@ -95,7 +95,7 @@ class _WelcomeState extends State<Welcome> {
         onPressed: ()async{
           print('UPDATE-POSITION IS WORKING');
 
-          context.read<ApiDataBloc>().add(Initial(city: await WeatherApi().updatePosition(), onSuccess: (){
+          context.read<ApiDataBloc>().add(Initial(city: await WeatherApi().updatePosition(), onSuccess:(){
             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Home()));
 
           }));

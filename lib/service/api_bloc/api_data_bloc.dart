@@ -8,16 +8,16 @@ part 'api_data_event.dart';
 part 'api_data_state.dart';
 
 class ApiDataBloc extends Bloc<ApiDataEvent, ApiDataState> {
-  ApiDataBloc() : super(ApiDataState(codeStatus: CodeStatus.init)) {
+  ApiDataBloc() : super(ApiDataState()) {
     on<Initial>((event, emit) async {
      try{ ApiData? apiData = await WeatherApi().getData(event.city);
-     emit(state.copyWith(apiData: apiData,codeStatus: CodeStatus.success));
+     emit(state.copyWith(apiData: apiData));
      print('apidata=== ${apiData?.clouds?.all}');
      event.onSuccess();
      }
 
          catch(e){
-          emit(state.copyWith(codeStatus: CodeStatus.failure));
+
          }
     });
   }

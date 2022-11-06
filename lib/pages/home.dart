@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
               print('TEMPERATURE${state.apiData?.main?.tempMax}');
               print('TEMPERATURE MIN${state.apiData?.main?.tempMin}');
               print('TEMPERATURE TEMP${state.apiData?.main?.temp}');
-              if(state.codeStatus==CodeStatus.success) {
+
                 return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -61,14 +61,9 @@ class _HomeState extends State<Home> {
                   Text('Temperature maximum ${state.apiData?.main?.tempMax}'),
                 ],
               );
-              }else if(state.codeStatus==CodeStatus.failure){
-                return const Center(
-                  child: Text('Please try later again'),
-                );
-              }
-                return const Center(
-                child: CircularProgressIndicator(),
-              );
+
+
+
             },
           ),
         ),
