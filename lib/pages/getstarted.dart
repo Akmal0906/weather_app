@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/models/constants.dart';
 import 'package:weather_app/pages/welcome.dart';
+
+import '../models/constants.dart';
+
 class GetStarted extends StatelessWidget {
   const GetStarted({Key? key}) : super(key: key);
 

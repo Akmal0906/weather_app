@@ -11,13 +11,13 @@ class ApiDataBloc extends Bloc<ApiDataEvent, ApiDataState> {
   ApiDataBloc() : super(ApiDataState(codeStatus: CodeStatus.init)) {
     on<Initial>((event, emit) async {
      try{ ApiData? apiData = await WeatherApi().getData(event.city);
-     state.copyWith(apiData: apiData,codeStatus: CodeStatus.success);
+     emit(state.copyWith(apiData: apiData,codeStatus: CodeStatus.success));
      print('apidata=== ${apiData?.clouds?.all}');
      event.onSuccess();
      }
 
          catch(e){
-          state.copyWith(codeStatus: CodeStatus.failure);
+          emit(state.copyWith(codeStatus: CodeStatus.failure));
          }
     });
   }
