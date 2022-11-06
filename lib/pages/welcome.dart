@@ -8,7 +8,7 @@ import 'package:weather_app/models/constants.dart';
 import 'package:weather_app/pages/home.dart';
 
 
-import '../service/api_bloc/api_data_bloc.dart';
+import '../service/weather_bloc/data_bloc.dart';
 import '../service/weather_data.dart';
 
 class Welcome extends StatefulWidget {
@@ -27,7 +27,7 @@ class _WelcomeState extends State<Welcome> {
     List<City> selected = City.getSelectedCities();
     Size size = MediaQuery.of(context).size;
     return BlocProvider(
-  create: (context) => ApiDataBloc(),
+  create: (context) => DataBloc(),
   child: Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -89,13 +89,13 @@ class _WelcomeState extends State<Welcome> {
           );
         },
       ),
-      floatingActionButton: BlocBuilder<ApiDataBloc,ApiDataState>(
+      floatingActionButton: BlocBuilder<DataBloc,DataState>(
         builder: (context, state) {
         return FloatingActionButton(
         onPressed: ()async{
           print('UPDATE-POSITION IS WORKING');
 
-          context.read<ApiDataBloc>().add(Initial(city: await WeatherApi().updatePosition(), onSuccess:(){
+          context.read<DataBloc>().add(Initial(city: await WeatherApi().updatePosition(), onSuccess:(){
             Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Home()));
 
           }));

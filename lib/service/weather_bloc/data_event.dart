@@ -1,9 +1,9 @@
-part of 'api_data_bloc.dart';
+part of 'data_bloc.dart';
 
-abstract class ApiDataEvent extends Equatable {
-  const ApiDataEvent();
+abstract class DataEvent extends Equatable {
+  const DataEvent();
 }
-class Initial extends ApiDataEvent{
+class Initial extends DataEvent{
    String? city;
    Function onSuccess;
 

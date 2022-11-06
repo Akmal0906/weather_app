@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/service/weather_api_data.dart';
 
-import '../service/api_bloc/api_data_bloc.dart';
+import '../service/weather_bloc/data_bloc.dart';
+
 
 class Home extends StatefulWidget {
   String? latitude;
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ApiDataBloc(),
+      create: (context) => DataBloc(),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
           backgroundColor: Colors.lightBlue,
         ),
         body: SingleChildScrollView(
-              child: BlocBuilder<ApiDataBloc, ApiDataState>(
+              child: BlocBuilder<DataBloc, DataState>(
             builder: (context, state) {
               print('STATE NAME ${state.apiData?.name}');
               print('TEMPERATURE${state.apiData?.main?.tempMax}');
@@ -62,9 +62,9 @@ class _HomeState extends State<Home> {
                 ],
               );
 
+              }
 
 
-            },
           ),
         ),
       ),

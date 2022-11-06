@@ -1,15 +1,15 @@
-part of 'api_data_bloc.dart';
+part of 'data_bloc.dart';
 
 
-class ApiDataState extends Equatable {
+class DataState extends Equatable {
   ApiData? apiData;
 
-  ApiDataState(
+  DataState(
       {this.apiData});
 
-  ApiDataState copyWith(
+  DataState copyWith(
       { ApiData? apiData}) {
-    return ApiDataState(
+    return DataState(
       apiData: apiData ?? this.apiData,
 
 
