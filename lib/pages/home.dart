@@ -1,57 +1,77 @@
-// ignore_for_file: avoid_print
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:weather_app/models/city.dart';
-import 'package:weather_app/models/constants.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/service/weather_api_data.dart';
+
+import '../service/api_bloc/api_data_bloc.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  String? latitude;
+  String? longitude;
+  String? speed;
+  String? address;
+
+  Home({Key? key, this.address, this.latitude, this.longitude, this.speed})
+      : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  Constants myconstants = Constants();
-  int temperature = 0;
-  int maxTemp = 0;
-  String weatherStateName = 'Loading...';
-  int humidity = 0;
-  int windSpeed = 0;
-  var currentData = 'Loading...';
-  String imageUrl = '';
-  int woeid = 44418;
-  String location = 'London';
-  var selectedCities = City.getSelectedCities();
-  List<String> cities = ['London'];
-  List consolidateWeatherList = [];
 
-  //Api calls url
-  String searchLocationUrl =
-      'https://www.metaweather.com/api/location/search/?query='; //To get the woeid
-  String searchWeatherUrl =
-      'https://www.metaweather.com/api/location/'; //to get weather details using the woeid
-  void fetchLocation(String location) async {
-    var searchResult = await http.get(Uri.parse(searchLocationUrl + location));
-    var result = json.decode(searchResult.body);
-    print(result);
-  }
 
   @override
   void initState() {
-    fetchLocation(cities[0]);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title:const Text('Home'),
+    return BlocProvider(
+      create: (context) => ApiDataBloc(),
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Weather'),
+          backgroundColor: Colors.lightBlue,
+        ),
+        body: SingleChildScrollView(
+              child: BlocBuilder<ApiDataBloc, ApiDataState>(
+            builder: (context, state) {
+              print('STATE NAME ${state.apiData?.name}');
+              print('TEMPERATURE${state.apiData?.main?.tempMax}');
+              print('TEMPERATURE MIN${state.apiData?.main?.tempMin}');
+              print('TEMPERATURE TEMP${state.apiData?.main?.temp}');
+              if(state.codeStatus==CodeStatus.success) {
+                return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('City name ${state.apiData?.name}'),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text('Temperature ${state.apiData?.main?.temp}'),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text('Temperature minimum ${state.apiData?.main?.tempMin}'),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text('Temperature maximum ${state.apiData?.main?.tempMax}'),
+                ],
+              );
+              }else if(state.codeStatus==CodeStatus.failure){
+                return const Center(
+                  child: Text('Please try later again'),
+                );
+              }
+                return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
