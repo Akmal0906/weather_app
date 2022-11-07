@@ -2,9 +2,9 @@ part of 'data_bloc.dart';
 
 
 class DataState extends Equatable {
-  ApiData? apiData;
+  final ApiData? apiData;
 
-  DataState(
+  const DataState(
       {this.apiData});
 
   DataState copyWith(

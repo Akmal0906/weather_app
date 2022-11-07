@@ -4,12 +4,12 @@ abstract class DataEvent extends Equatable {
   const DataEvent();
 }
 class Initial extends DataEvent{
-   String? city;
-   Function onSuccess;
+  final String? city;
+ // final Function onSuccess;
 
-   Initial({this.city,required this.onSuccess});
+   const Initial({this.city});
 
   @override
-  List<Object?> get props =>[city,onSuccess];
+  List<Object?> get props =>[city];
 
 }
