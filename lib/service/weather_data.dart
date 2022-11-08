@@ -11,7 +11,7 @@ class WeatherApi {
   static const String baseUrl =
       'https://api.openweathermap.org/data/2.5/weather?q=';
 
-  Future<String?> updatePosition() async {
+  Future updatePosition() async {
     Position position = await _determinePosition();
     var placemark =
         await placemarkFromCoordinates(position.latitude, position.longitude);
@@ -46,7 +46,7 @@ class WeatherApi {
     return await Geolocator.getCurrentPosition();
   }
 
-  Future<ApiData?> getData(String? city) async {
+  Future getData(String city) async {
     final dio = Dio();
     try {
       var response = await dio.get('$baseUrl$city&appid=$apiKey');
@@ -57,6 +57,7 @@ class WeatherApi {
     } catch (e) {
       print(e.toString());
     }
-    return null;
+
+
   }
 }

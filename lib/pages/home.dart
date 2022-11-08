@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/service/weather_data.dart';
 
 import '../service/weather_bloc/data_bloc.dart';
 
 
 class Home extends StatefulWidget {
-  String? latitude;
-  String? longitude;
-  String? speed;
-  String? address;
-  String? city;
+
+ final String city;
 
 
-  Home({Key? key, this.address, this.latitude, this.longitude, this.speed,this.city})
+  const Home({Key? key,required this.city})
       : super(key: key);
 
   @override
@@ -42,32 +38,38 @@ class _HomeState extends State<Home> {
           body: SingleChildScrollView(
             child: BlocBuilder<DataBloc, DataState>(
                 builder: (context, state) {
-                  print('STATE NAME ${state.apiData?.name}');
-                  print('TEMPERATURE${state.apiData?.main?.tempMax}');
-                  print('TEMPERATURE MIN${state.apiData?.main?.tempMin}');
-                  print('TEMPERATURE TEMP${state.apiData?.main?.temp}');
-
+                if(state is EmptyState){
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }else if(state is InitialState){
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('City name ${state.apiData?.name}'),
+                      Text('City name ${state.apiData.name}'),
                       const SizedBox(
                         height: 20,
                       ),
-                      Text('Temperature ${(state.apiData?.main?.temp?.toInt()
-                          )??300 - 273}'),
+                      Text('Temperature ${(state.apiData.main!.temp!.toInt()-
+                          32
+                      )/1.8.toInt()}'),
                       const SizedBox(
                         height: 20,
                       ),
-                      Text('Temperature minimum ${(state.apiData?.main?.tempMin
-                          ?.toInt())??300 - 273}'),
+                      Text('Temperature minimum ${(state.apiData.main!.tempMin
+                          !.toInt())- 273}'),
                       const SizedBox(
                         height: 20,
                       ),
-                      Text('Temperature maximum ${state.apiData?.main?.tempMax
+                      Text('Temperature maximum ${state.apiData.main?.tempMax
                           ?.toInt()}'),
                     ],
                   );
+                }
+             return const Center(
+               child: Text('dsofogdojgdflgd'),
+             );
+
                 }
 
 
