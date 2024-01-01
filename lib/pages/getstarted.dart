@@ -8,8 +8,8 @@ class GetStarted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size=MediaQuery.of(context).size;
-    Constants myconstants=Constants();
+    Size size = MediaQuery.of(context).size;
+    Constants myconstants = Constants();
     return Scaffold(
       body: Container(
         width: size.width,
@@ -21,20 +21,25 @@ class GetStarted extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset('assets/images/get-started.png'),
-             const SizedBox(height: 30,),
+              const SizedBox(
+                height: 30,
+              ),
               GestureDetector(
-                onTap: (){
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Welcome()));
+                onTap: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => const Welcome()));
                 },
                 child: Container(
                   height: 50,
-                  width: size.width*0.7,
+                  width: size.width * 0.7,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: myconstants.primaryColor
-                  ),
-                  child:const Center(
-                    child: Text('Get Started',style: TextStyle(color: Colors.white,fontSize: 18),),
+                      borderRadius: BorderRadius.circular(10),
+                      color: myconstants.primaryColor),
+                  child: const Center(
+                    child: Text(
+                      'Get Started',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
                   ),
                 ),
               )

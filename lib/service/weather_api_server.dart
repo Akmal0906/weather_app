@@ -1,21 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:weather_app/service/weather_api_data.dart';
+import 'package:weather_app/models/weather_model.dart';
 
 class WeatherApi {
-  static const String url ='https://api.openweathermap.org/data/2.5/weather?q=Samarkand&appid=f14d444c68f95239729ccdd7b990a47e';
-  static const String apiKey =
-      'f14d444c68f95239729ccdd7b990a47e';
-  static const String baseUrl =
-      'https://api.openweathermap.org/data/2.5/weather?q=';
-
   Future updatePosition() async {
     Position position = await _determinePosition();
     var placemark =
         await placemarkFromCoordinates(position.latitude, position.longitude);
-    return placemark[0].locality;
+    print('AAAAAAAA${placemark[0].subThoroughfare}');
+    print(placemark.join(''));
+    return placemark[1].locality;
   }
 
   Future<Position> _determinePosition() async {
@@ -40,22 +36,20 @@ class WeatherApi {
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
-
     return await Geolocator.getCurrentPosition();
   }
 
   Future getData(String city) async {
     final dio = Dio();
     try {
-      var response = await dio.get('$baseUrl$city&appid=$apiKey');
+      var response = await dio.get(
+          'https://api.weatherapi.com/v1/forecast.json?key=6d609b696894475698d105756221112&q=$city&days=5&aqi=no&alerts=no');
       print(response.realUri);
       print('RESPONSE DATA COMING SERVER ${response.data}');
 
-      return ApiData.fromJson(response.data);
+      return WeatherData.fromJson(response.data);
     } catch (e) {
       print(e.toString());
     }
-
-
   }
 }

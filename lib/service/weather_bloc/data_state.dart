@@ -1,21 +1,18 @@
 part of 'data_bloc.dart';
 
-abstract class DataState extends Equatable {
+abstract class DataState extends Equatable {}
 
-}
 //enum CodeStatus { init, success, failure }
 class InitialState extends DataState {
-  final ApiData apiData;
+  final WeatherData weatherData;
 
-   InitialState({required this.apiData});
+  InitialState({required this.weatherData});
 
   @override
-  List<Object?> get props => [apiData];
+  List<Object?> get props => [weatherData];
 }
 
-class EmptyState extends DataState{
+class LoadingState extends DataState {
   @override
-
   List<Object?> get props => [];
-
 }
